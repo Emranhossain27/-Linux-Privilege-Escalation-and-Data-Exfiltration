@@ -48,6 +48,8 @@ DeviceProcessEvents
 | where InitiatingProcessCommandLine has_any(sensitivegroup)
 ```
 
+<img width="1672" height="455" alt="image" src="https://github.com/user-attachments/assets/f94620eb-b372-4ac5-a21a-3530a9e81c20" />
+
 **Findings:**
 
 * Unauthorized execution of the `usermod -aG sudo` command was detected.
@@ -64,6 +66,10 @@ DeviceFileEvents
 | where ActionType =="FileCreated"
 | order by Timestamp desc
 ```
+<img width="1540" height="181" alt="image" src="https://github.com/user-attachments/assets/38609752-ec5f-4782-9792-bb07dd550963" />
+
+<img width="1157" height="208" alt="image" src="https://github.com/user-attachments/assets/1201ec94-d90d-4c46-a29f-0f75884ce895" />
+
 
 **Findings:**
 
@@ -85,6 +91,7 @@ DeviceProcessEvents
 | project Timestamp,DeviceName,ActionType,InitiatingProcessCommandLine
 | order by Timestamp desc
 ```
+<img width="1146" height="335" alt="image" src="https://github.com/user-attachments/assets/9610d7cb-b3ed-46b8-8dd2-1953a12e7fe4" />
 
 **Findings:**
 
@@ -96,12 +103,13 @@ DeviceProcessEvents
 **Query executed:**
 
 ```kusto
-let timeThreshold = ago(3d);
 DeviceNetworkEvents
-| where DeviceName == "linux-lab"
-| where Timestamp > timeThreshold
-| where InitiatingProcessCommandLine contains "storage blob upload"
+| where DeviceName contains "linux-lab"
+| where Timestamp >= datetime(2025-10-04T01:48:40.811161Z)
+| project Timestamp, ActionType, InitiatingProcessCommandLine
+| order by Timestamp asc
 ```
+<img width="1322" height="162" alt="image" src="https://github.com/user-attachments/assets/58f83569-0e80-4cef-a9ce-42fab380adaf" />
 
 **Findings:**
 
